@@ -2,22 +2,8 @@
 <html>
     <head>
         <title>My experiment</title>
-        <!-- <script type="module" src="jspsych-6.1.0/jspsych.js"></script> -->
-        <!-- <script type="module" src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script> -->
         <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
     </head>
     <body></body>
-    <script type="module">
-        import jsPsych from './jspsych-6.1.0/jspsych.js';
-        import './jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js'
-
-        var hello_trial = {
-            type: 'html-keyboard-response',
-            stimulus: 'Hello world!'
-        }
-
-        jsPsych.init({
-            timeline: [hello_trial]
-        })
-    </script>
+    <script type="module" src="experiment.js"></script>
 </html>
