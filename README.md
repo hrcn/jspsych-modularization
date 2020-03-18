@@ -21,6 +21,7 @@ Remove `<script src="jspsych-6.0.5/jspsych.js"></script>` and `<script src="jsps
 Add a attribute `type="module"` in the script tag below: `<script type="module">`
 
 Change the content in the script tag to the following:
+
 ```
 import jsPsych from './jspsych-6.1.0/jspsych.js';
 import htmlKeyboardResponse from './jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js'
@@ -35,4 +36,11 @@ jsPsych.init({
 })
 ```
 
-## 5. Move to AWS S3
+## Local testing
+To get rid of the CORS block in some browsers, you have to setup a static server.
+
+Run `npm i -g serve`
+
+Under to the project directory, run `serve ./`
+
+Go to `http://localhost:5000/` and open `experiment.html`
