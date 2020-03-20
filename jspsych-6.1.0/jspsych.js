@@ -854,9 +854,9 @@ const jsPsych = (function() {
     // execute trial method
     if (typeof trial.type === 'object') {
       // trial is passed as object, directly execute it
-      trial.type.trial(DOM_target, trial)
+      trial.type.trial(jsPsych, trial)
     } else {
-      jsPsych.plugins[trial.type].trial(DOM_target, trial);
+      jsPsych.plugins[trial.type].trial(jsPsych, trial);
     }
 
     // call trial specific loaded callback if it exists
