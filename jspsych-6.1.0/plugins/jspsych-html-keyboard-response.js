@@ -1,55 +1,44 @@
-/**
- * jspsych-html-keyboard-response
- * Josh de Leeuw
- *
- * plugin for displaying a stimulus and getting a keyboard response
- *
- * documentation: docs.jspsych.org
- *
- **/
-import jsPsych from '../jspsych.js';
-
 const htmlKeyboardResponse = (function() {
 
   var plugin = {};
-
+  
   plugin.info = {
     name: 'html-keyboard-response',
     description: '',
     parameters: {
       stimulus: {
-        type: jsPsych.plugins.parameterType.HTML_STRING,
+        type: 'HTML_STRING',
         pretty_name: 'Stimulus',
         default: undefined,
         description: 'The HTML string to be displayed'
       },
       choices: {
-        type: jsPsych.plugins.parameterType.KEYCODE,
+        type: 'KEYCODE',
         array: true,
         pretty_name: 'Choices',
-        default: jsPsych.ALL_KEYS,
+        default: 'allkeys',
         description: 'The keys the subject is allowed to press to respond to the stimulus.'
       },
       prompt: {
-        type: jsPsych.plugins.parameterType.STRING,
+        type: 'STRING',
         pretty_name: 'Prompt',
         default: null,
         description: 'Any content here will be displayed below the stimulus.'
       },
       stimulus_duration: {
-        type: jsPsych.plugins.parameterType.INT,
+        type: 'INT',
         pretty_name: 'Stimulus duration',
         default: null,
         description: 'How long to hide the stimulus.'
       },
       trial_duration: {
-        type: jsPsych.plugins.parameterType.INT,
+        type: 'INT',
         pretty_name: 'Trial duration',
         default: null,
         description: 'How long to show trial before it ends.'
       },
       response_ends_trial: {
-        type: jsPsych.plugins.parameterType.BOOL,
+        type: 'BOOL',
         pretty_name: 'Response ends trial',
         default: true,
         description: 'If true, trial will end when subject makes a response.'
@@ -58,9 +47,10 @@ const htmlKeyboardResponse = (function() {
     }
   }
 
-  plugin.trial = function(display_element, trial) {
-
+  plugin.trial = function(jsPsych, trial) {
+    
     var new_html = '<div id="jspsych-html-keyboard-response-stimulus">'+trial.stimulus+'</div>';
+    var display_element = jsPsych.getDisplayElement();
 
     // add prompt
     if(trial.prompt !== null){
