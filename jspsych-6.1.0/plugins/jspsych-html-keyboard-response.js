@@ -1,60 +1,44 @@
 const htmlKeyboardResponse = (function() {
 
   var plugin = {};
-
-  var parameterType = {
-    BOOL: 0,
-    STRING: 1,
-    INT: 2,
-    FLOAT: 3,
-    FUNCTION: 4,
-    KEYCODE: 5,
-    SELECT: 6,
-    HTML_STRING: 7,
-    IMAGE: 8,
-    AUDIO: 9,
-    VIDEO: 10,
-    OBJECT: 11,
-    COMPLEX: 12
-  }
-
+  
   plugin.info = {
     name: 'html-keyboard-response',
     description: '',
     parameters: {
       stimulus: {
-        type: parameterType.HTML_STRING,
+        type: 'HTML_STRING',
         pretty_name: 'Stimulus',
         default: undefined,
         description: 'The HTML string to be displayed'
       },
       choices: {
-        type: parameterType.KEYCODE,
+        type: 'KEYCODE',
         array: true,
         pretty_name: 'Choices',
         default: 'allkeys',
         description: 'The keys the subject is allowed to press to respond to the stimulus.'
       },
       prompt: {
-        type: parameterType.STRING,
+        type: 'STRING',
         pretty_name: 'Prompt',
         default: null,
         description: 'Any content here will be displayed below the stimulus.'
       },
       stimulus_duration: {
-        type: parameterType.INT,
+        type: 'INT',
         pretty_name: 'Stimulus duration',
         default: null,
         description: 'How long to hide the stimulus.'
       },
       trial_duration: {
-        type: parameterType.INT,
+        type: 'INT',
         pretty_name: 'Trial duration',
         default: null,
         description: 'How long to show trial before it ends.'
       },
       response_ends_trial: {
-        type: parameterType.BOOL,
+        type: 'BOOL',
         pretty_name: 'Response ends trial',
         default: true,
         description: 'If true, trial will end when subject makes a response.'
