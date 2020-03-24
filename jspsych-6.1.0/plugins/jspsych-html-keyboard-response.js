@@ -48,10 +48,7 @@ const htmlKeyboardResponse = (function() {
   }
 
   plugin.trial = function(jsPsych, trial) {
-
-    console.log(jsPsych);
-    console.log(trial)
-
+    
     var new_html = '<div id="jspsych-html-keyboard-response-stimulus">'+trial.stimulus+'</div>';
     var display_element = jsPsych.getDisplayElement();
 
