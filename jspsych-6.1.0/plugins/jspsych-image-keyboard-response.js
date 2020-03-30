@@ -7,69 +7,65 @@
  * documentation: docs.jspsych.org
  *
  **/
-import jsPsych from '../jspsych.js';
-
 const imageKeyboardResponse = (function() {
 
   var plugin = {};
-
-  jsPsych.pluginAPI.registerPreload('image-keyboard-response', 'stimulus', 'image');
 
   plugin.info = {
     name: 'image-keyboard-response',
     description: '',
     parameters: {
       stimulus: {
-        type: jsPsych.plugins.parameterType.IMAGE,
+        type: 'IMAGE',
         pretty_name: 'Stimulus',
         default: undefined,
         description: 'The image to be displayed'
       },
       stimulus_height: {
-        type: jsPsych.plugins.parameterType.INT,
+        type: 'INT',
         pretty_name: 'Image height',
         default: null,
         description: 'Set the image height in pixels'
       },
       stimulus_width: {
-        type: jsPsych.plugins.parameterType.INT,
+        type: 'INT',
         pretty_name: 'Image width',
         default: null,
         description: 'Set the image width in pixels'
       },
       maintain_aspect_ratio: {
-        type: jsPsych.plugins.parameterType.BOOL,
+        type: 'BOOL',
         pretty_name: 'Maintain aspect ratio',
         default: true,
         description: 'Maintain the aspect ratio after setting width or height'
       },
       choices: {
-        type: jsPsych.plugins.parameterType.KEYCODE,
+        type: 'KEYCODE',
         array: true,
         pretty_name: 'Choices',
-        default: jsPsych.ALL_KEYS,
+        default: 'allkeys',
         description: 'The keys the subject is allowed to press to respond to the stimulus.'
       },
       prompt: {
-        type: jsPsych.plugins.parameterType.STRING,
+        type: 'STRING',
         pretty_name: 'Prompt',
         default: null,
         description: 'Any content here will be displayed below the stimulus.'
       },
       stimulus_duration: {
-        type: jsPsych.plugins.parameterType.INT,
+        type: 'INT',
         pretty_name: 'Stimulus duration',
         default: null,
         description: 'How long to hide the stimulus.'
       },
       trial_duration: {
-        type: jsPsych.plugins.parameterType.INT,
+        type: 'INT',
         pretty_name: 'Trial duration',
         default: null,
         description: 'How long to show trial before it ends.'
       },
       response_ends_trial: {
-        type: jsPsych.plugins.parameterType.BOOL,
+        type: 'BOOL',
         pretty_name: 'Response ends trial',
         default: true,
         description: 'If true, trial will end when subject makes a response.'
@@ -77,7 +73,11 @@ const imageKeyboardResponse = (function() {
     }
   }
 
-  plugin.trial = function(display_element, trial) {
+  plugin.trial = function(jsPsych, trial) {
+
+    var display_element = jsPsych.getDisplayElement();
+
+    jsPsych.pluginAPI.registerPreload('image-keyboard-response', 'stimulus', 'image');
 
     // display stimulus
     var html = '<img src="'+trial.stimulus+'" id="jspsych-image-keyboard-response-stimulus" style="';
