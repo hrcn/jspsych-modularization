@@ -43,8 +43,8 @@ const htmlKeyboardResponse = (function() {
         default: true,
         description: 'If true, trial will end when subject makes a response.'
       },
-
-    }
+    },
+    preloads: undefined
   }
 
   plugin.trial = function(jsPsych, trial) {

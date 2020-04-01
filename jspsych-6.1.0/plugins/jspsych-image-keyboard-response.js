@@ -7,9 +7,13 @@
  * documentation: docs.jspsych.org
  *
  **/
+// import jsPsych from '../jspsych.js';
+
 const imageKeyboardResponse = (function() {
 
   var plugin = {};
+
+  // jsPsych.pluginAPI.registerPreload('image-keyboard-response', 'stimulus', 'image');
 
   plugin.info = {
     name: 'image-keyboard-response',
@@ -70,14 +74,17 @@ const imageKeyboardResponse = (function() {
         default: true,
         description: 'If true, trial will end when subject makes a response.'
       },
+    },
+    preloads: {
+      plugin: 'image-keyboard-response',
+      parameter: 'stimulus',
+      media_type: 'image'
     }
   }
 
   plugin.trial = function(jsPsych, trial) {
 
     var display_element = jsPsych.getDisplayElement();
-
-    jsPsych.pluginAPI.registerPreload('image-keyboard-response', 'stimulus', 'image');
 
     // display stimulus
     var html = '<img src="'+trial.stimulus+'" id="jspsych-image-keyboard-response-stimulus" style="';
