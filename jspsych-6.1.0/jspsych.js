@@ -2547,16 +2547,17 @@ jsPsych.pluginAPI = (function() {
             var media = preloads.media_type;
             var func = preloads.conditional_function;
             var trials = timeline.trialsOfType(type);
+            console.log(trials)
             for (var n = 0; n < trials.length; n++) {
               if(trials[n][param] && typeof trials[n][param] !== 'function') {
-                if (!func || func(trials[j])) {
+                if (!func || func(trials[n])) {
                   if (media === 'image') {
-                    images = images.concat(jsPsych.utils.flatten([trials[j][param]]));
+                    images = images.concat(jsPsych.utils.flatten([trials[n][param]]));
                   } else if (media === 'audio') {
-                    audio = audio.concat(jsPsych.utils.flatten([trials[j][param]]));
+                    audio = audio.concat(jsPsych.utils.flatten([trials[n][param]]));
                   }
                   else if (media === 'video') {
-                    video = video.concat(jsPsych.utils.flatten([trials[j][param]]));
+                    video = video.concat(jsPsych.utils.flatten([trials[n][param]]));
                   }
                 }
               }
