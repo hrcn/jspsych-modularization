@@ -75,11 +75,9 @@ const imageKeyboardResponse = (function() {
         description: 'If true, trial will end when subject makes a response.'
       },
     },
-    preloads: {
-      plugin: 'image-keyboard-response',
-      parameter: 'stimulus',
-      media_type: 'image'
-    }
+    preloads: [
+      {parameter: 'stimulus', media_type: 'image'}
+    ]
   }
 
   plugin.trial = function(jsPsych, trial) {

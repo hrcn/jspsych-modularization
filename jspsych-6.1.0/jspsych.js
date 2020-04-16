@@ -2515,58 +2515,52 @@ jsPsych.pluginAPI = (function() {
     audio = audio || [];
     video = video || [];
 
-    for (var i = 0; i < opts_timeline.length; i++) {
-      if(typeof opts_timeline[i].type !== 'undefined' && typeof opts_timeline[i].type.preloads !== 'undefined') {
-        var preloads = opts_timeline[i].type.info.preloads;
-        var type = preloads.plugin;
-        var param = preloads.parameter;
-        var media = preloads.media_type;
-        var func = preloads.conditional_function;
-        var trials = timeline.trialsOfType(type);
-        for (var j = 0; j < trials.length; j++) {
-          if (trials[j][param] && typeof trials[j][param] !== 'function') {
-            if (!func || func(trials[j])) {
-              if (media === 'image') {
-                images = images.concat(jsPsych.utils.flatten([trials[j][param]]));
-              } else if (media === 'audio') {
-                audio = audio.concat(jsPsych.utils.flatten([trials[j][param]]));
-              }
-              else if (media === 'video') {
-                video = video.concat(jsPsych.utils.flatten([trials[j][param]]));
+    opts_timeline.forEach(multiple_trials => {
+      console.log(multiple_trials);
+      if (!multiple_trials.hasOwnProperty('type')) {
+        multiple_trials.timeline.forEach(trial => {
+          var preloads = trial.type.info.preloads;
+          if (typeof preloads !== 'undefined') {
+            for (var i = 0; i < preloads.length; i++) {
+              var type = trial.type.info.name;
+              var param = preloads[i].parameter;
+              var media = preloads[i].media_type;
+              var func = preloads[i].conditional_function;
+              var trials = timeline.trialsOfType(type);
+              for (var j = 0; j < trials.length; j++) {
+                if (trials[j][param] && typeof trials[j][param] !== 'function') {
+                  if (!func || func(trials[j])) {
+                    if (media === 'image') images = images.concat(jsPsych.utils.flatten([trials[j][param]]));
+                    else if (media === 'audio') audio = audio.concat(jsPsych.utils.flatten([trials[j][param]]));
+                    else if (media === 'video') video = video.concat(jsPsych.utils.flatten([trials[j][param]]));
+                  }
+                }
               }
             }
           }
-        }
-      }
-      if(typeof opts_timeline[i].timeline !== 'undefined') {
-        for (var m = 0; m < opts_timeline[i].timeline.length; m++) {
-          var preloads = opts_timeline[i].timeline[m].type.info.preloads;
-          if(typeof preloads !== 'undefined') {
-            var type = preloads.plugin;
-            var param = preloads.parameter;
-            var media = preloads.media_type;
-            var func = preloads.conditional_function;
+        })
+      } else {
+        var preloads = multiple_trials.type.info.preloads;
+        if (typeof preloads !== 'undefined') {
+          for (var i = 0; i < preloads.length; i++) {
+            var type = multiple_trials.type.info.name;
+            var param = preloads[i].parameter;
+            var media = preloads[i].media_type;
+            var func = preloads[i].conditional_function;
             var trials = timeline.trialsOfType(type);
-            console.log(trials)
-            for (var n = 0; n < trials.length; n++) {
-              if(trials[n][param] && typeof trials[n][param] !== 'function') {
-                if (!func || func(trials[n])) {
-                  if (media === 'image') {
-                    images = images.concat(jsPsych.utils.flatten([trials[n][param]]));
-                  } else if (media === 'audio') {
-                    audio = audio.concat(jsPsych.utils.flatten([trials[n][param]]));
-                  }
-                  else if (media === 'video') {
-                    video = video.concat(jsPsych.utils.flatten([trials[n][param]]));
-                  }
+            for (var j = 0; j < trials.length; j++) {
+              if (trials[j][param] && typeof trials[j][param] !== 'function') {
+                if (!func || func(trials[j])) {
+                  if (media === 'image') images = images.concat(jsPsych.utils.flatten([trials[j][param]]));
+                  else if (media === 'audio') audio = audio.concat(jsPsych.utils.flatten([trials[j][param]]));
+                  else if (media === 'video') video = video.concat(jsPsych.utils.flatten([trials[j][param]]));
                 }
               }
             }
           }
         }
       }
-    }
-
+    });
 
     // construct list
     // for (var i = 0; i < preloads.length; i++) {
