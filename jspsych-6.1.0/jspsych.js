@@ -2516,34 +2516,11 @@ jsPsych.pluginAPI = (function() {
     video = video || [];
 
     opts_timeline.forEach(multiple_trials => {
-      console.log(multiple_trials);
-      if (!multiple_trials.hasOwnProperty('type')) {
-        multiple_trials.timeline.forEach(trial => {
-          var preloads = trial.type.info.preloads;
-          if (typeof preloads !== 'undefined') {
-            for (var i = 0; i < preloads.length; i++) {
-              var type = trial.type.info.name;
-              var param = preloads[i].parameter;
-              var media = preloads[i].media_type;
-              var func = preloads[i].conditional_function;
-              var trials = timeline.trialsOfType(type);
-              for (var j = 0; j < trials.length; j++) {
-                if (trials[j][param] && typeof trials[j][param] !== 'function') {
-                  if (!func || func(trials[j])) {
-                    if (media === 'image') images = images.concat(jsPsych.utils.flatten([trials[j][param]]));
-                    else if (media === 'audio') audio = audio.concat(jsPsych.utils.flatten([trials[j][param]]));
-                    else if (media === 'video') video = video.concat(jsPsych.utils.flatten([trials[j][param]]));
-                  }
-                }
-              }
-            }
-          }
-        })
-      } else {
-        var preloads = multiple_trials.type.info.preloads;
+      (multiple_trials.timeline || [multiple_trials]).forEach(trial => {
+        var preloads = trial.type.info.preloads;
         if (typeof preloads !== 'undefined') {
           for (var i = 0; i < preloads.length; i++) {
-            var type = multiple_trials.type.info.name;
+            var type = trial.type.info.name;
             var param = preloads[i].parameter;
             var media = preloads[i].media_type;
             var func = preloads[i].conditional_function;
@@ -2559,32 +2536,55 @@ jsPsych.pluginAPI = (function() {
             }
           }
         }
-      }
+      })
     });
 
-    // construct list
-    // for (var i = 0; i < preloads.length; i++) {
-    //   var type = preloads[i].plugin;
-    //   var param = preloads[i].parameter;
-    //   var media = preloads[i].media_type;
-    //   var func = preloads[i].conditional_function;
-    //   var trials = timeline.trialsOfType(type);
-    //   for (var j = 0; j < trials.length; j++) {
-    //     if (trials[j][param] && typeof trials[j][param] !== 'function') {
-
-    //       if ( !func  || func(trials[j]) ){
-    //         if (media === 'image') {
-    //           images = images.concat(jsPsych.utils.flatten([trials[j][param]]));
-    //         } else if (media === 'audio') {
-    //           audio = audio.concat(jsPsych.utils.flatten([trials[j][param]]));
+    // opts_timeline.forEach(multiple_trials => {
+    //   console.log(multiple_trials);
+    //   if (!multiple_trials.hasOwnProperty('type')) {
+    //     multiple_trials.timeline.forEach(trial => {
+    //       var preloads = trial.type.info.preloads;
+    //       if (typeof preloads !== 'undefined') {
+    //         for (var i = 0; i < preloads.length; i++) {
+    //           var type = trial.type.info.name;
+    //           var param = preloads[i].parameter;
+    //           var media = preloads[i].media_type;
+    //           var func = preloads[i].conditional_function;
+    //           var trials = timeline.trialsOfType(type);
+    //           for (var j = 0; j < trials.length; j++) {
+    //             if (trials[j][param] && typeof trials[j][param] !== 'function') {
+    //               if (!func || func(trials[j])) {
+    //                 if (media === 'image') images = images.concat(jsPsych.utils.flatten([trials[j][param]]));
+    //                 else if (media === 'audio') audio = audio.concat(jsPsych.utils.flatten([trials[j][param]]));
+    //                 else if (media === 'video') video = video.concat(jsPsych.utils.flatten([trials[j][param]]));
+    //               }
+    //             }
+    //           }
     //         }
-    //         else if (media === 'video') {
-    //           video = video.concat(jsPsych.utils.flatten([trials[j][param]]));
+    //       }
+    //     })
+    //   } else {
+    //     var preloads = multiple_trials.type.info.preloads;
+    //     if (typeof preloads !== 'undefined') {
+    //       for (var i = 0; i < preloads.length; i++) {
+    //         var type = multiple_trials.type.info.name;
+    //         var param = preloads[i].parameter;
+    //         var media = preloads[i].media_type;
+    //         var func = preloads[i].conditional_function;
+    //         var trials = timeline.trialsOfType(type);
+    //         for (var j = 0; j < trials.length; j++) {
+    //           if (trials[j][param] && typeof trials[j][param] !== 'function') {
+    //             if (!func || func(trials[j])) {
+    //               if (media === 'image') images = images.concat(jsPsych.utils.flatten([trials[j][param]]));
+    //               else if (media === 'audio') audio = audio.concat(jsPsych.utils.flatten([trials[j][param]]));
+    //               else if (media === 'video') video = video.concat(jsPsych.utils.flatten([trials[j][param]]));
+    //             }
+    //           }
     //         }
     //       }
     //     }
     //   }
-    // }
+    // });
 
     images = jsPsych.utils.unique(jsPsych.utils.flatten(images));
     audio  = jsPsych.utils.unique(jsPsych.utils.flatten(audio));
